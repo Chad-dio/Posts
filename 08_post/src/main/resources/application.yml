@@ -8,20 +8,25 @@ spring:
     url: jdbc:mysql://116.198.242.154:3306/posts?useSSL=false&serverTimezone=UTC
     username: root
     password: 'Chad@20021231'
-    redis:
-      host: 121.40.204.51
-      port: 6379
-      #    password: 123321
-      lettuce:
-        pool:
-          max-active: 10
-          max-idle: 10
-          min-idle: 1
-          time-between-eviction-runs: 10s
-    jackson:
-      default-property-inclusion: non_null # JSON处理时忽略非空字段
+  jackson:
+    default-property-inclusion: non_null # JSON处理时忽略非空字段
+  redis:
+    host: 121.40.204.51
+    port: 6379
+    #    password: 123321
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 1
+        time-between-eviction-runs: 10s
+  data:
     mongodb:
-      uri: mongodb://121.40.204.51:27017/posts
+      host: 121.40.204.51
+      port: 27017
+      database: comment
+      username: root
+      password: '123456'
 mybatis-plus:
   type-aliases-package: cn.chad.post.domain.po
   global-config:
