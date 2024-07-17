@@ -1,2 +1,32 @@
 server:
   port: 18081
+spring:
+  application:
+    name: 08post
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://116.198.242.154:3306/hmdp?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 'Chad@20021231'
+    redis:
+      host: 121.40.204.51
+      port: 6379
+      #    password: 123321
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 10
+          min-idle: 1
+          time-between-eviction-runs: 10s
+    jackson:
+      default-property-inclusion: non_null # JSON处理时忽略非空字段
+mybatis-plus:
+  type-aliases-package: com.itheima.mp.domain.po
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted # 配置逻辑删除字段
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+
+
