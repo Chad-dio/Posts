@@ -5,7 +5,7 @@ spring:
     name: 08post
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://116.198.242.154:3306/hmdp?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://116.198.242.154:3306/posts?useSSL=false&serverTimezone=UTC
     username: root
     password: 'Chad@20021231'
     redis:
@@ -20,13 +20,18 @@ spring:
           time-between-eviction-runs: 10s
     jackson:
       default-property-inclusion: non_null # JSON处理时忽略非空字段
+    mongodb:
+      uri: mongodb://121.40.204.51:27017/posts
 mybatis-plus:
-  type-aliases-package: com.itheima.mp.domain.po
+  type-aliases-package: cn.chad.post.domain.po
   global-config:
     db-config:
       id-type: auto
       logic-delete-field: deleted # 配置逻辑删除字段
   configuration:
     default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+
+knife4j:
+  enable: true
 
 
