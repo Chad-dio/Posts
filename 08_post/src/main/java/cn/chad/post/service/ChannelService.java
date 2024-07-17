@@ -11,4 +11,6 @@ public interface ChannelService extends IService<Channel> {
     Result deleteById(Integer id);
 
     Result saveChannel(ChannelDTO channel);
+
+    Result updateChannel(Channel channel);
 }

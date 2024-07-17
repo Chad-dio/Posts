@@ -1,9 +1,9 @@
 package cn.chad.post.controller;
 
 import io.swagger.annotations.Api;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 @Api("帖子相关接口")
-@Controller
+@RestController
 public class PostController {
 }

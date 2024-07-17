@@ -34,4 +34,10 @@ public class ChannelController {
     public Result delChannel(@PathVariable Integer id){
         return channelService.deleteById(id);
     }
+
+    @PutMapping("/update")
+    @ApiOperation("更新已有的频道")
+    public Result updateChannel(@RequestBody Channel channel){
+        return channelService.updateChannel(channel);
+    }
 }

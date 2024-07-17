@@ -53,4 +53,11 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
         }
         return Result.success("添加成功");
     }
+
+    @Override
+    public Result updateChannel(Channel channel) {
+        LambdaUpdateWrapper<Channel> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Channel::getId, channel.getId());
+        return Result.success(update(channel, wrapper));
+    }
 }
