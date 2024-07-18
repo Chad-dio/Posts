@@ -12,12 +12,13 @@ import javax.annotation.Resource;
 
 
 @Api("频道相关接口")
-@RestController("/channel")
+@RestController
+@RequestMapping("/channel")
 public class ChannelController {
 
     @Resource
     private ChannelService channelService;
-    @GetMapping("/channels")
+    @GetMapping("/findAll")
     @ApiOperation("查询全部的频道")
     public Result findAll(){
         return channelService.findAll();

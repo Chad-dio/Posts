@@ -9,6 +9,7 @@ import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @ApiModel("帖子实体")
@@ -24,7 +25,7 @@ public class Post implements Serializable {
     private Integer id;
 
     /**
-     * 自媒体用户ID
+     * 用户ID
      */
     @TableField("user_id")
     private Integer userId;
@@ -63,13 +64,13 @@ public class Post implements Serializable {
      * 创建时间
      */
     @TableField("created_time")
-    private Date createdTime;
+    private LocalDateTime createdTime;
 
     /**
      * 提交时间
      */
     @TableField("submitted_time")
-    private Date submittedTime;
+    private LocalDateTime submittedTime;
 
     /**
      * 当前状态
@@ -88,7 +89,7 @@ public class Post implements Serializable {
      * 定时发布时间，不定时则为空
      */
     @TableField("publish_time")
-    private Date publishTime;
+    private LocalDateTime publishTime;
 
     /**
      * 拒绝理由
@@ -112,7 +113,7 @@ public class Post implements Serializable {
     private Short enable;
 
     //状态枚举类
-    @Alias("WmNewsStatus")
+    @Alias("PostStatus")
     public enum Status{
         NORMAL((short)0),SUBMIT((short)1),FAIL((short)2),ADMIN_AUTH((short)3),ADMIN_SUCCESS((short)4),SUCCESS((short)8),PUBLISHED((short)9);
         short code;

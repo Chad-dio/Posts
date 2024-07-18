@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -46,7 +47,7 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
             return Result.error("存在相同名字的频道");
         }
         Channel channel = BeanUtil.copyProperties(channelDTO, Channel.class);
-        channel.setCreatedTime(new Date());
+        channel.setCreatedTime(LocalDateTime.now());
         boolean f = save(channel);
         if(!f){
             return Result.error("添加失败");

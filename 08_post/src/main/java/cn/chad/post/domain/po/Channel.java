@@ -8,9 +8,10 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
-@ApiModel("评论实体")
+@ApiModel("频道实体")
 @Data
 @TableName("t_channel")
 public class Channel implements Serializable {
@@ -57,5 +58,5 @@ public class Channel implements Serializable {
      * 创建时间
      */
     @TableField("created_time")
-    private Date createdTime;
+    private LocalDateTime createdTime;
 }
