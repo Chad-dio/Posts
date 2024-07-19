@@ -22,11 +22,7 @@ spring:
         time-between-eviction-runs: 10s
   data:
     mongodb:
-      host: 121.40.204.51
-      port: 27017
-      database: comment
-      username: root
-      password: '123456'
+      uri: mongodb://root:123456@121.40.204.51:27017/post?authSource=admin
 mybatis-plus:
   type-aliases-package: cn.chad.post.domain.po
   global-config:
