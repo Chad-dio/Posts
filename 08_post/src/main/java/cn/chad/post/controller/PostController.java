@@ -30,6 +30,15 @@ public class PostController {
         return postService.findAllByChannel(channelId);
     }
 
+    @GetMapping("/getPost/{postId}")
+    @ApiOperation("获取单个帖子")
+    public Result getPost(@PathVariable Long postId){
+        LambdaQueryWrapper<Post> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Post::getPostId, postId)
+                .eq(Post::getEnable, 1);
+        return Result.success(postService.getOne(wrapper));
+    }
+
     @PostMapping("/save")
     @ApiOperation("保存或者更新发帖")
     public Result saveOrUpdatePost(@RequestBody PostDTO postDTO){

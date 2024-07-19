@@ -22,6 +22,11 @@ public class CommentController {
         return commentServcie.findAll(postId);
     }
 
+    @GetMapping("/getComment/{commentId}")
+    @ApiOperation("查询评论")
+    public Result getComment(@PathVariable String commentId){
+        return commentServcie.getComment(commentId);
+    }
     @PostMapping("/add/{postId}")
     @ApiOperation("新增评论")
     public Result save(
@@ -36,5 +41,17 @@ public class CommentController {
             @PathVariable Long postId,
             @PathVariable String commentId){
         return commentServcie.deleteById(postId, commentId);
+    }
+
+    @GetMapping("/findAllReply/{commentId}")
+    @ApiOperation("查询评论的全部回复")
+    public Result findAllReply(@PathVariable String commentId){
+        return commentServcie.findAllReply(commentId);
+    }
+
+    @PostMapping("/like")
+    @ApiOperation("点赞/取消点赞评论")
+    public Result likeComment(@RequestParam String commentId){
+        return commentServcie.likeComment(commentId);
     }
 }

@@ -26,6 +26,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     private PostIdWorker postIdWorker;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
     @Override
     public Result saveOrUpdatePost(PostDTO postDTO) {
         if(BeanUtil.isEmpty(postDTO) || postDTO.getContent().isEmpty()){
@@ -106,6 +107,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             stringRedisTemplate.opsForZSet().add(key, fieldKey, System.currentTimeMillis());
             //3.2 帖子添加到用户的收藏集合去
             //TODO:记录存入mongodb中
+
         }else{
             //4.已收藏
             //4.1 将用户从帖子的收藏集合中去掉

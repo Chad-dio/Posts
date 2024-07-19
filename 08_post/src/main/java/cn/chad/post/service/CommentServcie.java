@@ -9,4 +9,10 @@ public interface CommentServcie {
     Result save(Long postId, CommentDTO commentDTO);
 
     Result deleteById(Long postId, String commentId);
+
+    Result findAllReply(String commentId);
+
+    Result getComment(String commentId);
+
+    Result likeComment(String commentId);
 }
