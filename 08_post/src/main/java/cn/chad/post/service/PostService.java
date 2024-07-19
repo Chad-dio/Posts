@@ -11,4 +11,12 @@ public interface PostService extends IService<Post> {
     Result saveOrUpdatePost(PostDTO postDTO);
 
     Result delPost(Integer userId, Long postId);
+
+    Result findAllByChannel(Integer channelId);
+
+    Result findAll();
+
+    Result findMyAll(Integer userId);
+
+    Result collectPost(Long postId);
 }

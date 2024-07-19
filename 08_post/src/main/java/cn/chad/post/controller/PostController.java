@@ -21,20 +21,13 @@ public class PostController {
     @GetMapping("/findAll")
     @ApiOperation("查询所有的发帖")
     public Result findAll(){
-        LambdaQueryWrapper<Post> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Post::getStatus, Post.Status.PUBLISHED.getCode())
-                .eq(Post::getEnable, 1);
-        return Result.success(postService.list(wrapper));
+        return postService.findAll();
     }
 
-    @GetMapping("/list/{channelId}")
+    @GetMapping("/listChannel/{channelId}")
     @ApiOperation("查询频道下的所有发帖")
     public Result findAllByChannel(@PathVariable Integer channelId){
-        LambdaQueryWrapper<Post> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Post::getStatus, Post.Status.PUBLISHED.getCode())
-                .eq(Post::getEnable, 1)
-                .eq(Post::getChannelId, channelId);
-        return Result.success(postService.list(wrapper));
+        return postService.findAllByChannel(channelId);
     }
 
     @PostMapping("/save")
@@ -51,18 +44,21 @@ public class PostController {
         return postService.delPost(userId, postId);
     }
 
-    @GetMapping("/list/{userId}")
+    @GetMapping("/listMy/{userId}")
     @ApiOperation("查询自己发布的所有帖子")
     public Result findMyAll(@PathVariable Integer userId){
-        LambdaQueryWrapper<Post> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Post::getUserId, userId)
-                .eq(Post::getEnable, 1);
-        return Result.success(postService.list(wrapper));
+        return postService.findMyAll(userId);
     }
     @GetMapping("/collection/{userId}")
     @ApiOperation("查询自己收藏的所有帖子")
     public Result findMyCollection(@PathVariable Integer userId){
         // TODO:去mongodb里面查询
         return null;
+    }
+
+    @PostMapping("/collect/{postId}")
+    @ApiOperation("收藏/取消收藏")
+    public Result collectPost(@PathVariable Long postId){
+        return postService.collectPost(postId);
     }
 }

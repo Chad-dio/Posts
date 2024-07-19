@@ -112,6 +112,17 @@ public class Post implements Serializable {
     @TableField("enable")
     private Short enable;
 
+    /**
+     * 收藏数量
+     */
+    @TableField(exist = false)
+    private Long collectNum;
+    /**
+     * 当前用户是否收藏
+     */
+    @TableField(exist = false)
+    private Boolean isCollected;
+
     //状态枚举类
     @Alias("PostStatus")
     public enum Status{
