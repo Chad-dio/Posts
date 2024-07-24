@@ -1,4 +1,4 @@
-package cn.chad.post.controller.user;
+package cn.chad.post.controller.admin;
 
 import cn.chad.post.domain.dto.ChannelDTO;
 import cn.chad.post.domain.po.Channel;
@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 
 @Api("频道相关接口")
 @RestController
-@RequestMapping("/channel")
+@RequestMapping("/admin/channel")
 public class ChannelController {
 
     @Resource

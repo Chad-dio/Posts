@@ -10,6 +10,7 @@ import cn.chad.post.service.PostService;
 import cn.chad.post.utils.PostIdWorker;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -59,12 +60,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
 
     @Override
     public Result delPost(Integer userId, Long postId) {
-        LambdaQueryWrapper<Post> wrapper = new LambdaQueryWrapper();
+        LambdaUpdateWrapper<Post> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(Post::getUserId, userId)
                 .eq(Post::getPostId, postId)
-                .eq(Post::getEnable, 1);
-        remove(wrapper);
-        return Result.success("删除成功");
+                .set(Post::getEnable, 0);
+        return Result.success(update(wrapper));
     }
 
     @Override
@@ -145,11 +145,31 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         return Result.success(my);
     }
 
+    @Override
+    public Result delAllPostByUserId(Integer userId) {
+        LambdaUpdateWrapper<Post> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Post::getUserId, userId)
+                .set(Post::getEnable, 0);
+        return Result.success(update(wrapper));
+    }
+
+    @Override
+    public Result delOnePostByPostId(Long postId) {
+        LambdaUpdateWrapper<Post> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Post::getPostId, postId)
+                .set(Post::getEnable, 0);
+        return Result.success(update(wrapper));
+    }
+
     private Post addExtraField(Post post, Integer userId){
         String key = POST_COLLECTED_KEY + post.getPostId();
         Double score = stringRedisTemplate.opsForZSet().score(key, userId.toString());
         post.setIsCollected((score != null));
         post.setCollectNum(stringRedisTemplate.opsForZSet().size(key));
         return post;
+    }
+
+    private void updateCollect(Long postId){
+        //TODO:删除之后对用户的收藏夹的操作
     }
 }

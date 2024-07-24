@@ -2,9 +2,11 @@ package cn.chad.post.service.impl;
 
 import cn.chad.post.domain.dto.ChannelDTO;
 import cn.chad.post.domain.po.Channel;
+import cn.chad.post.domain.po.Post;
 import cn.chad.post.domain.vo.Result;
 import cn.chad.post.mapper.ChannelMapper;
 import cn.chad.post.service.ChannelService;
+import cn.chad.post.service.PostService;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -12,12 +14,17 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
 public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> implements ChannelService {
+    @Resource
+    private PostService postService;
+
     @Override
     public Result findAll() {
         LambdaQueryWrapper<Channel> wrapper = new LambdaQueryWrapper<>();
@@ -28,13 +35,16 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
 
     @Override
     public Result deleteById(Integer id) {
+        LambdaQueryWrapper<Post> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Post::getChannelId, id);
+        List<Post> list = postService.list(queryWrapper);
+        if(!list.isEmpty()){
+            return Result.error("频道中存在帖子");
+        }
         LambdaUpdateWrapper<Channel> wrapper = new LambdaUpdateWrapper<>();
         wrapper.set(Channel::getStatus, 0)
                 .eq(Channel::getId, id);
-        boolean update = update(wrapper);
-        if(!update){
-            return Result.error("删除失败");
-        }
+        update(wrapper);
         return Result.success("删除成功");
     }
 

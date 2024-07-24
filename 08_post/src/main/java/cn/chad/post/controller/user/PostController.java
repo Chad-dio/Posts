@@ -18,18 +18,11 @@ public class PostController {
     @Resource
     private PostService postService;
 
-    @GetMapping("/findAll")
-    @ApiOperation("查询所有的发帖")
-    public Result findAll(){
-        return postService.findAll();
-    }
-
     @GetMapping("/listChannel/{channelId}")
     @ApiOperation("查询频道下的所有发帖")
     public Result findAllByChannel(@PathVariable Integer channelId){
         return postService.findAllByChannel(channelId);
     }
-
     @GetMapping("/getPost/{postId}")
     @ApiOperation("获取单个帖子")
     public Result getPost(@PathVariable Long postId){
