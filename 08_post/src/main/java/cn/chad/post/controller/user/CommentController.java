@@ -1,4 +1,4 @@
-package cn.chad.post.controller;
+package cn.chad.post.controller.user;
 
 import cn.chad.post.domain.dto.CommentDTO;
 import cn.chad.post.domain.vo.Result;

@@ -1,9 +1,11 @@
 package cn.chad.post.service.impl;
 
 import cn.chad.post.domain.dto.PostDTO;
+import cn.chad.post.domain.po.MyColl;
 import cn.chad.post.domain.po.Post;
 import cn.chad.post.domain.vo.Result;
 import cn.chad.post.mapper.PostMapper;
+import cn.chad.post.repository.MyCollRepository;
 import cn.chad.post.service.PostService;
 import cn.chad.post.utils.PostIdWorker;
 import cn.hutool.core.bean.BeanUtil;
@@ -26,6 +28,10 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     private PostIdWorker postIdWorker;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+//    @Resource
+//    private FavoriteRepository favoriteRepository;
+    @Resource
+    private MyCollRepository myCollRepository;
 
     @Override
     public Result saveOrUpdatePost(PostDTO postDTO) {
@@ -106,16 +112,37 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
             //3.1 用户添加到帖子的收藏集合里去
             stringRedisTemplate.opsForZSet().add(key, fieldKey, System.currentTimeMillis());
             //3.2 帖子添加到用户的收藏集合去
-            //TODO:记录存入mongodb中
-
+            LambdaQueryWrapper<Post> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(Post::getPostId, postId)
+                            .eq(Post::getEnable, 1);
+            Post post = getOne(wrapper);
+            MyColl myColl = new MyColl();
+            myColl.setUserId(userId);
+            myColl.setPostId(postId);
+            myColl.setTitle(post.getTitle());
+            myColl.setChannelId(post.getChannelId());
+            myCollRepository.insert(myColl);
+            return Result.success("收藏成功");
         }else{
             //4.已收藏
             //4.1 将用户从帖子的收藏集合中去掉
             stringRedisTemplate.opsForZSet().remove(key, fieldKey);
             //4.2 将帖子从用户的收藏集合去掉
-            //TODO:从mongodb中删除收藏记录
+            long l = myCollRepository.removeByUserIdAndPostId(userId, postId);
+            if(l > 0){
+                return Result.success("取消收藏成功");
+            }else{
+                return Result.error("取消收藏失败");
+            }
         }
-        return Result.success();
+    }
+
+    @Override
+    public Result getMyCollection(Integer userId) {
+        List<Long> my = myCollRepository.findAll().stream()
+                .map(myColl -> myColl.getPostId())
+                .toList();
+        return Result.success(my);
     }
 
     private Post addExtraField(Post post, Integer userId){

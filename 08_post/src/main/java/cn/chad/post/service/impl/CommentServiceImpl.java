@@ -56,7 +56,7 @@ public class CommentServiceImpl implements CommentServcie {
         Comment comment = BeanUtil.copyProperties(commentDTO, Comment.class);
         comment.setCreateDatetime(LocalDateTime.now());
         comment.setPostId(postId);
-        comment.setUserid("1");
+        comment.setUserId("1");
         comment.setLikeNum(0);
         comment.setReplyNum(0);
         comment.setState("1");

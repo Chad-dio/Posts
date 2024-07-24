@@ -19,4 +19,6 @@ public interface PostService extends IService<Post> {
     Result findMyAll(Integer userId);
 
     Result collectPost(Long postId);
+
+    Result getMyCollection(Integer userId);
 }

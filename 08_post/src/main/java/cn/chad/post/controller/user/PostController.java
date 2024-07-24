@@ -1,4 +1,4 @@
-package cn.chad.post.controller;
+package cn.chad.post.controller.user;
 
 import cn.chad.post.domain.dto.PostDTO;
 import cn.chad.post.domain.po.Post;
@@ -61,8 +61,7 @@ public class PostController {
     @GetMapping("/collection/{userId}")
     @ApiOperation("查询自己收藏的所有帖子")
     public Result findMyCollection(@PathVariable Integer userId){
-        // TODO:去mongodb里面查询
-        return null;
+        return postService.getMyCollection(userId);
     }
 
     @PostMapping("/collect/{postId}")

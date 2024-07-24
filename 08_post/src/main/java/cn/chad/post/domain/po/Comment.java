@@ -21,7 +21,7 @@ public class Comment {
     private String content; // 评论内容
     
     @Indexed
-    private String userid; // 评论人ID
+    private String userId; // 评论人ID
     
     private String nickname; // 评论人昵称
     

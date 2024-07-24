@@ -31,7 +31,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .groupName("Admin端")
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("cn.chad.post.controller"))
+                .apis(RequestHandlerSelectors.basePackage("cn.chad.post.controller.admin"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -47,7 +47,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .groupName("User端")
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("cn.chad.post.controller"))
+                .apis(RequestHandlerSelectors.basePackage("cn.chad.post.controller.user"))
                 .paths(PathSelectors.any())
                 .build();
     }
